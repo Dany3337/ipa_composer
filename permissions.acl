@@ -1,0 +1,233 @@
+/**
+ * Siemens access control list.
+ */
+
+/* Administrator Rules */
+rule AdministratorUserAccess {
+    description: "Grant Administrators full access on all resource"
+    participant: "org.siemens.Administrator"
+    operation: ALL
+    resource: "**"    
+    action: ALLOW
+}
+
+rule AdministratorSystemAccessRules {
+    description: "Grant Administrators full access on system"
+    participant: "org.siemens.Administrator"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule AdministratorOrgAcessRules {
+  	description: "Grant Administrators full access on system"
+  	participant: "org.siemens.Administrator"
+  	operation: ALL
+    resource: "org.siemens.*"
+  	action: ALLOW
+}
+
+/* Kaufmann Rules */
+rule KaufmannSystemRules {
+    description: "Grant Kaufmann read rights on system"
+    participant: "org.siemens.Kaufmann"
+    operation: READ
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule KaufmannKaufmannRules {
+    description: "Grant Kaufmann read rights on system"
+    participant: "org.siemens.Kaufmann"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: DENY
+}
+
+rule KaufmannAdministratorRules {
+    description: "Grant Kaufmann read rights on system"
+    participant: "org.siemens.Kaufmann"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: DENY
+}
+
+rule KaufmannAusbildnerRules {
+ 	  description: "Grant Kaufmann full access on Ausbildner"
+  	participant: "org.siemens.Kaufmann"
+  	operation: ALL
+  	resource: "org.siemens.Ausbildner"
+  	action: ALLOW
+}
+
+rule KaufmannLernendeRules {
+ 	  description: "Grant Kaufmann full access on Lernende"
+  	participant: "org.siemens.Kaufmann"
+  	operation: ALL
+  	resource: "org.siemens.Lernender"
+  	action: ALLOW
+}
+
+rule KaufmannBerufRules {
+    description: "Grant Kaufmann full access on Beruf"
+  	participant: "org.siemens.Kaufmann"
+  	operation: ALL
+  	resource: "org.siemens.Beruf"
+  	action: ALLOW
+}
+
+rule KaufmannEinsatzstelleRules {
+ 	  description: "Grant Kaufmann full access on Einsatzstelle"
+  	participant: "org.siemens.Kaufmann"
+  	operation: ALL
+  	resource: "org.siemens.Einsatzstelle"
+  	action: ALLOW
+}
+
+rule KaufmannLehrgangRules {
+ 	  description: "Grant Kaufmann full access on Lehrgang"
+  	participant: "org.siemens.Kaufmann"
+  	operation: ALL
+  	resource: "org.siemens.Lehrgang"
+  	action: ALLOW
+}
+
+/* Lernende Berechtigungen */
+rule LernenderSystemRules {
+    description: "Grant Lernender read rights on system"
+    participant: "org.siemens.Lernender"
+    operation: READ
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule LernenderKaufmannRules {
+    description: "Deny Lernender access on Kaufmann"
+    participant: "org.siemens.Lernender"
+    operation: ALL
+    resource: "org.siemens.Kaufmann"
+    action: DENY
+}
+
+rule LernenderLehrgangRules {
+ 	  description: "Grant Lernender read access on Lehrgang"
+  	participant: "org.siemens.Lernender"
+  	operation: READ
+  	resource: "org.siemens.Lehrgang"
+  	action: ALLOW
+}
+
+rule LernenderBerufRules {
+    description: "Grant Lernender read access on Beruf"
+    participant: "org.siemens.Lernender"
+    operation: READ
+    resource: "org.siemens.Beruf"
+    action: ALLOW
+}
+
+rule LernenderEinsatzstelleRules {
+    description: "Grant Lernender read access on Einsatzstelle"
+    participant: "org.siemens.Lernender"
+    operation: READ
+    resource: "org.siemens.Einsatzstelle"
+    action: ALLOW
+}
+
+rule LernenderAusbildnerRules {
+    description: "Grant Lernender read access on Ausbildner"
+    participant: "org.siemens.Lernender"
+    operation: READ
+    resource: "org.siemens.Ausbildner"
+    action: ALLOW
+}
+
+rule LernenderLernenderRules {
+    description: "Grant Lernender read access on his Profile Data"
+    participant(p): "org.siemens.Lernender"
+    operation: READ
+    resource(r): "org.siemens.Lernender"
+    condition: (p.getIdentifier() !== r.getIdentifier())
+    action: DENY
+}
+
+/* Ausbildner */
+rule AusbildnerSystemRules {
+    description: "Grant Ausbildner read rights on system"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule AusbildnerKaufmannRules {
+    description: "Deny Ausbildner access on Kaufmann"
+    participant: "org.siemens.Ausbildner"
+    operation: ALL
+    resource: "org.siemens.Kaufmann"
+    action: DENY
+}
+
+rule AusbildnerAdministratorRules {
+    description: "Deny Ausbildner access on Administrator"
+    participant: "org.siemens.Ausbildner"
+    operation: ALL
+    resource: "org.siemens.Administrator"
+    action: DENY
+}
+
+rule AusbildnerLernenderRules {
+    description: "Grant Ausbildner read rights on Lernender"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.siemens.Lernender"
+    action: ALLOW
+}
+
+rule AusbildnerLehrgangRules {
+    description: "Grant Ausbildner read rights on Lehrgang"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.siemens.Lehrgang"
+    action: ALLOW
+}
+
+rule AusbildnerBerufRules {
+    description: "Grant Ausbildner read rights on Beruf"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.siemens.Beruf"
+    action: ALLOW
+}
+
+rule AusbildnerEinsatzstelleRules {
+    description: "Grant Ausbildner read rights on Einsatzstelle"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.siemens.Einsatzstelle"
+    action: ALLOW
+}
+
+rule AusbildnerAusbildnerRules {
+    description: "Grant Ausbildner read rights on Ausbildner"
+    participant: "org.siemens.Ausbildner"
+    operation: READ
+    resource: "org.siemens.Ausbildner"
+    action: ALLOW
+}
+
+/* NetworkAdmin */
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

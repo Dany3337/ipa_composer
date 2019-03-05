@@ -1,0 +1,60 @@
+/**
+ * Siemens business network definition.
+ */
+namespace org.siemens
+
+/* Participants */
+participant Administrator identified by id {
+  o String id
+  o String vorname
+  o String nachname
+  o String geburtsdatum
+}
+
+participant Lernender identified by id {
+  o String id 
+  o String vorname
+  o String nachname
+  o String geburtsdatum
+  o String lehrbeginn
+  o String lehrende
+  --> Lehrgang lehrgang
+}
+
+participant Kaufmann identified by id {
+  o String id
+  o String vorname
+  o String nachname
+  o String geburtsdatum
+}
+
+participant Ausbildner identified by id {
+  o String id
+  o String vorname
+  o String nachname
+  o String geburtsdatum
+}
+
+/* Assets */
+asset Lehrgang identified by id {
+  o String id 
+  o String name
+  --> Beruf beruf
+  --> Einsatzstelle[] einsatzstelle
+}
+
+asset Beruf identified by id {
+  o String id
+  o String berufKurz
+  o String berufLang
+}
+
+asset Einsatzstelle identified by id {
+  o String id
+  o String langBezeichnung
+  o String kurzBezeichnung
+  o String stellenbeschreibung
+  o String bemerkung
+  --> Beruf beruf
+  --> Ausbildner ausbildner
+}
